@@ -1,6 +1,8 @@
 package org.jbehave.web.selenium;
 
+import org.jbehave.core.model.Scenario;
 import org.jbehave.core.model.Story;
+import org.jbehave.core.steps.Timing;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -23,7 +25,7 @@ import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceAccessKey;
 import static org.jbehave.web.selenium.SauceWebDriverProvider.getSauceUser;
 
 /**
- * A {@link StoryReporter} that passes back to SauceLabs the executed job results.
+ * A StoryReporter that passes back to SauceLabs the executed job results.
  */
 public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
 
@@ -50,11 +52,11 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
     }
 
     @Override
-    public void beforeScenario(String title) {
+    public void beforeScenario(Scenario scenario) {
         try {
-            super.beforeScenario(title);
+            super.beforeScenario(scenario);
+            String title = scenario.getTitle();
             ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=Scenario: " + title);
-            // This should really be done per Story, but the webDriverProvider has not done it's thing for this thread yet :-(
             sessionIds.set(((RemoteWebDriver) webDriverProvider.get()).getSessionId());
             String payload = "{\"tags\":[" + getJobTags() + "], " + getBuildId() + "\"name\":\" " + getJobName() + "\"}";
             postJobUpdate(storyName.get(), sessionIds.get(), payload);
@@ -91,13 +93,11 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
         }
     }
 
-
-
     @Override
-    public void afterScenario() {
+    public void afterScenario(Timing timing) {
         String as = "(After Scenario Steps, if any...)";
         try {
-            ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=" + as);            
+            ((JavascriptExecutor) webDriverProvider.get()).executeScript("sauce:context=" + as);
         } catch (RemoteWebDriverProvider.SauceLabsJobHasEnded e) {
             System.err.println("Couldn't set context as Sauce Labs job has ended");
         } catch (WebDriverException e) {
@@ -172,15 +172,8 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
         return jobUrl;
     }
 
-    /**
-     * By deault, this prints a URL to the Job on SauceLabs.
-     * Refer https://saucelabs.com/docs/sauce-ondemand
-     * @param responseLineFromSauceLabs a line from the response
-     */
     protected String processSauceLabsResponseLine(String responseLineFromSauceLabs) {
         String jobUrl = "";
-        // This comes back from Saucelabs:
-        // "video_url": "http://saucelabs.com/jobs/3bd32831ec0d91c423552330b332a59c4/video.flv",
         Matcher matcher = SAUCE_LABS_VIDEO_URL_PATTERN.matcher(responseLineFromSauceLabs);
         while (matcher.find()) {
             jobUrl = matcher.group().replace("/video.flv", "");
@@ -196,20 +189,10 @@ public class SauceContextStoryReporter extends SeleniumContextStoryReporter {
         return "";
     }
 
-    /**
-     * The name of the job. By default this is the story name.
-     * @return the job name
-     */
     protected String getJobName() {
         return storyName.get();
     }
 
-    /**
-     * A set of tags to apply to the job, like so:
-     *   "foo", "bar"
-     *
-     * @return a string of comma separated strings in quotes
-     */
     protected String getJobTags() {
         return "";
     }

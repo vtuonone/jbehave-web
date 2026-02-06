@@ -7,9 +7,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.HasInputDevices;
-import org.openqa.selenium.interactions.Keyboard;
-import org.openqa.selenium.interactions.Mouse;
 
 import java.util.List;
 import java.util.Set;
@@ -20,7 +17,7 @@ import java.util.Set;
  * href="http://code.google.com/p/selenium/wiki/PageObjects">Page Objects</a>
  * pattern.
  */
-public abstract class WebDriverPage implements WebDriver, HasInputDevices, JavascriptExecutor, HasCapabilities {
+public abstract class WebDriverPage implements WebDriver, JavascriptExecutor, HasCapabilities {
 
     private final WebDriverProvider driverProvider;
 
@@ -86,16 +83,6 @@ public abstract class WebDriverPage implements WebDriver, HasInputDevices, Javas
 
     public Options manage() {
         return driverProvider.get().manage();
-    }
-
-    // From HasInputDevices
-
-    public Keyboard getKeyboard() {
-        return ((HasInputDevices) driverProvider.get()).getKeyboard();
-    }
-
-    public Mouse getMouse() {
-        return ((HasInputDevices) driverProvider.get()).getMouse();
     }
 
     // From JavascriptExecutor

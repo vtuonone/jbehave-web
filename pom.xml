@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.jbehave.web</groupId>
   <artifactId>jbehave-web</artifactId>
-  <version>4.0-SNAPSHOT</version>
+  <version>4.0.1-s4</version>
   <packaging>pom</packaging>
   <name>JBehave Web</name>
   <description>JBehave Web provides a web integration layer for Behaviour-Driven Development</description>
@@ -22,10 +22,10 @@
   </modules>
 
   <properties>
-    <jbehave.core.version>4.1</jbehave.core.version>
-    <jbehave.site.version>3.3</jbehave.site.version>
+    <jbehave.core.version>5.2.0</jbehave.core.version>
+    <jbehave.site.version>3.5</jbehave.site.version>
     <jbehave.webapp.name>jbehave-web-runner</jbehave.webapp.name>
-    <jdk.version>1.6</jdk.version>
+    <jdk.version>11</jdk.version>
     <jetty.version>9.4.3.v20170317</jetty.version>
     <gmaven.version>1.5</gmaven.version>
   </properties>
@@ -34,8 +34,8 @@
     <dependencies>
       <dependency>
         <groupId>org.mockito</groupId>
-        <artifactId>mockito-all</artifactId>
-        <version>1.8.5</version>
+        <artifactId>mockito-core</artifactId>
+        <version>5.11.0</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -49,7 +49,7 @@
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
+      <artifactId>mockito-core</artifactId>
     </dependency>
     <dependency>
       <!-- hack to overcome https://issues.apache.org/jira/browse/MSITE-228 -->

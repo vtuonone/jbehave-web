@@ -1,36 +1,25 @@
 package org.jbehave.web.selenium;
 
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.remote.Command;
-import org.openqa.selenium.remote.CommandExecutor;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.Response;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.MutableCapabilities;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- *  Allows to connect to <a href="http://saucelabs.com/">Sauce Labs</a> to run 
+ *  Allows to connect to <a href="http://saucelabs.com/">Sauce Labs</a> to run
  *  Selenium tests in the cloud.  Requires Sauce credentials, username and access key, which
  *  can be provided via system properties "SAUCE_USERNAME" and "SAUCE_ACCESS_KEY".
  *
- *  Firefox on Windows is the default browser choice. This is done via DesiredCapabilities
- *  passed in through the constructor.  Like so -
- *
- *      DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
- *      desiredCapabilities.setVersion("3.6.");
- *      desiredCapabilities.setPlatform(Platform.WINDOWS);
- *      desiredCapabilities.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
- *
+ *  Firefox is the default browser choice. This is done via Capabilities
+ *  passed in through the constructor.
  */
 public class SauceWebDriverProvider extends RemoteWebDriverProvider {
 
     /**
-     *
-     * @param desiredCapabilities
+     * @param desiredCapabilities the desired capabilities
      */
-    public SauceWebDriverProvider(DesiredCapabilities desiredCapabilities) {
+    public SauceWebDriverProvider(Capabilities desiredCapabilities) {
         super(desiredCapabilities);
     }
 
@@ -44,8 +33,8 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
     }
 
     @Override
-    protected DesiredCapabilities makeDesiredCapabilities() {
-        DesiredCapabilities dc = super.makeDesiredCapabilities();
+    protected MutableCapabilities makeDesiredCapabilities() {
+        MutableCapabilities dc = super.makeDesiredCapabilities();
         dc.setCapability("name", "JBehave");
         dc.setCapability("selenium-version", getSeleniumVersion());
         dc.setCapability("max-duration", getMaxDuration());
@@ -56,7 +45,7 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
 
     /**
      * Get selenium version from System property 'selenium.version' if there.
-     * User '2.13.0' if property not set.
+     * Use '4.40.0' if property not set.
      * @return Selenium version.
      */
     protected String getSeleniumVersion() {
@@ -68,7 +57,7 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
     }
 
     protected String getDefaultSeleniumVersion() {
-        return "2.14.0";
+        return "4.40.0";
     }
 
     @Override
@@ -137,7 +126,5 @@ public class SauceWebDriverProvider extends RemoteWebDriverProvider {
         }
         return idleTimeout;
     }
-
-
 
 }

@@ -1,9 +1,9 @@
 package org.jbehave.web.selenium;
 
+import java.lang.reflect.Method;
+
 import org.jbehave.core.steps.DelegatingStepMonitor;
 import org.jbehave.core.steps.StepMonitor;
-
-import com.thoughtworks.selenium.Selenium;
 
 /**
  * Decorator of {@link StepMonitor} which adds communication of current context
@@ -14,20 +14,17 @@ public class SeleniumStepMonitor extends DelegatingStepMonitor {
     private final ContextView contextView;
     private final SeleniumContext context;
 
-    public SeleniumStepMonitor(Selenium selenium, SeleniumContext context, StepMonitor delegate) {
-        this(new SeleniumContextView(selenium), context, delegate);
-    }
-
     public SeleniumStepMonitor(ContextView contextView, SeleniumContext context, StepMonitor delegate) {
         super(delegate);
         this.contextView = contextView;
         this.context = context;
     }
 
-    public void performing(String step, boolean dryRun) {
+    @Override
+    public void beforePerforming(String step, boolean dryRun, Method method) {
         String currentScenario = context.getCurrentScenario();
         contextView.show(currentScenario, step);
-        super.performing(step, dryRun);
+        super.beforePerforming(step, dryRun, method);
     }
 
 }

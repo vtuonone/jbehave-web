@@ -2,15 +2,13 @@ package org.jbehave.web.selenium;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 public class PropertyWebDriverProviderTest {
 
@@ -24,12 +22,14 @@ public class PropertyWebDriverProviderTest {
     }
 
     @Test
+    @Ignore("Only when Firefox is available")
     public void shouldSupportFirefoxByDefault() {
         createProviderForProperty(null);
         assertThat(provider.get(), instanceOf(FirefoxDriver.class));
     }
 
     @Test
+    @Ignore("Only when Firefox is available")
     public void shouldSupportFirefoxByProperty() {
         createProviderForProperty("firefox");
         assertThat(provider.get(), instanceOf(FirefoxDriver.class));
@@ -43,17 +43,10 @@ public class PropertyWebDriverProviderTest {
     }
 
     @Test
-    @Ignore("Only when IE is available")
-    public void shouldSupportIEByProperty() {
-        createProviderForProperty("ie");
-        assertThat(provider.get(), instanceOf(InternetExplorerDriver.class));
-    }
-
-    @Test
-    @Ignore("Only when PhantomJS is available")
-    public void shouldSupportPhantomJSByProperty() {
-        createProviderForProperty("phantomjs");
-        assertThat(provider.get(), instanceOf(PhantomJSDriver.class));
+    @Ignore("Only when Edge is available")
+    public void shouldSupportEdgeByProperty() {
+        createProviderForProperty("edge");
+        assertThat(provider.get(), instanceOf(EdgeDriver.class));
     }
 
     private void createProviderForProperty(String browser) {

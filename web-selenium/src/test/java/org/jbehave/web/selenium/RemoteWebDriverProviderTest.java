@@ -17,17 +17,16 @@ public class RemoteWebDriverProviderTest {
 
     //@Test(expected = RunningStoriesFailed.class)
     public void shouldFailUponInitialiseWhenRunningWithPerStoriesSteps() throws Throwable {
-        // TODO
-        runStory(new MyPerStoriesSteps(new RemoteWebDriverProvider())); // will fail because URL is not set
+        runStory(new MyPerStoriesSteps(new RemoteWebDriverProvider()));
     }
 
     @Test(expected = RunningStoriesFailed.class)
     public void shouldFailUponInitialiseWhenRunningWithPerStorySteps() throws Throwable {
-        runStory(new MyPerStorySteps(new RemoteWebDriverProvider())); // will fail because URL is not set
+        runStory(new MyPerStorySteps(new RemoteWebDriverProvider()));
     }
 
     private void runStory(WebDriverSteps steps) {
-        final String story = "Scenario: A simple web scenario\n" 
+        final String story = "Scenario: A simple web scenario\n"
                            + "When a test is executed\n";
         String storyPath = "/path/to/story";
         StoryLoader storyLoader = new StoryLoader() {
@@ -45,9 +44,9 @@ public class RemoteWebDriverProviderTest {
         configuration.useStoryLoader(storyLoader)
                 .useStoryReporterBuilder(new StoryReporterBuilder().withFormats(new Format[0]))
                 .useStoryControls(new StoryControls().doResetStateBeforeScenario(false));
-        Embedder embedder = new Embedder(new StoryMapper(), new PerformableTree(), new SilentEmbedderMonitor(System.out));
+        Embedder embedder = new Embedder(new StoryMapper(), new PerformableTree(), new SilentEmbedderMonitor());
         embedder.useConfiguration(configuration);
-        embedder.useCandidateSteps(new InstanceStepsFactory(configuration, steps).createCandidateSteps());
+        embedder.useStepsFactory(new InstanceStepsFactory(configuration, steps));
         embedder.runStoriesAsPaths(Arrays.asList(storyPath));
     }
 

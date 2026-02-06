@@ -39,6 +39,7 @@ public class FlashDriverTest {
     }
 
     @Test
+    @org.junit.Ignore("Requires Firefox browser to be installed")
     public void shouldProvideFlashDriver() {
         FlashWebDriverProvider provider = new FlashWebDriverProvider("flashObjectId", new FirefoxDriver());
         provider.initialize();

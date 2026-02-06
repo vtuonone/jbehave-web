@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jbehave.web</groupId>
     <artifactId>jbehave-web</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>4.0.1-s4</version>
   </parent>
   <artifactId>jbehave-web-selenium</artifactId>
   <packaging>jar</packaging>
@@ -11,7 +11,7 @@
   <description>Selenium and WebDriver API bindings for JBehave</description>
 
   <properties>
-    <selenium.version>3.12.0</selenium.version>
+    <selenium.version>4.40.0</selenium.version>
   </properties>
 
   <dependencies>
@@ -19,29 +19,6 @@
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>${selenium.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-leg-rc</artifactId>
-      <version>${selenium.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.testng</groupId>
-          <artifactId>testng</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium.fluent</groupId>
-      <artifactId>fluent-selenium</artifactId>
-      <version>1.17</version>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-java</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <!--<dependency>-->
       <!--<groupId>com.google.guava</groupId>-->
@@ -62,28 +39,10 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>com.codeborne</groupId>
-      <artifactId>phantomjsdriver</artifactId>
-      <version>1.4.1</version>
-      <exclusions>
-        <!--
-           phantomjsdriver 1.4.1 has a dep on Selenium 3.1.0 :-(
-           Refer:
-           http://mvnrepository.com/artifact/com.codeborne/phantomjsdriver/1.4.1
-        -->
-        <exclusion>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-remote-driver</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-java</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest</artifactId>
+      <version>2.2</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
