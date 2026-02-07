@@ -13,11 +13,9 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.value.ValueMap;
 import org.jbehave.core.embedder.Embedder;
-import org.jbehave.core.embedder.PerformableTree;
 import org.jbehave.core.embedder.StoryManager;
 import org.jbehave.core.failures.BatchFailures;
 import org.jbehave.core.model.Story;
-import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.web.runner.context.StoryContext;
 
 import com.google.inject.Inject;
@@ -48,7 +46,7 @@ public class SubmitStory extends Template {
 
     private void reportToDirectory(String path) {
         embedder.configuration().storyReporterBuilder().withCodeLocation(codeLocationFromPath(path))
-                .withDefaultFormats().withFormats(HTML, TXT, XML).withCrossReference(new CrossReference());
+                .withDefaultFormats().withFormats(HTML, TXT, XML);
     }
 
     public final class StoryForm extends Form<ValueMap> {
@@ -76,8 +74,7 @@ public class SubmitStory extends Template {
             String storyPath = storyPath();
             Story story = storyManager.storyOfText(storyContext.getInput(), storyPath);
             BatchFailures failures = new BatchFailures();
-            PerformableTree.RunContext runContext = new PerformableTree.RunContext(embedder.configuration(), embedder.stepsFactory(), embedder.embedderMonitor(), embedder.metaFilter(), failures);
-            storyManager.runningStories(runContext, asList(story));
+            storyManager.runStories(asList(story), embedder.metaFilter(), failures);
             storyContext.setOutput(storyPath);
         }
     }

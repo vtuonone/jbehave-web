@@ -182,7 +182,6 @@ public class ViewStory extends Template {
             }
             if ( anyDone() ){
                 embedder.generateReportsView();
-                embedder.generateCrossReference();
             }
         }
 
