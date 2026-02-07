@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.jbehave.web</groupId>
     <artifactId>jbehave-web-archetypes</artifactId>
-    <version>4.0.1-s4</version>
+    <version>4.0.1-SELENIUM4</version>
   </parent>
 
   <artifactId>jbehave-web-selenium-flash-archetype</artifactId>
